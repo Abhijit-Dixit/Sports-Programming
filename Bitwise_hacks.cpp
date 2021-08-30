@@ -29,7 +29,9 @@ x | ~(x - (1 << n)) = the lowest run of cleared bits (possibly length 0) in x, s
 -------------------------------------------------------------------------
 
 //https://codeforces.com/contest/1325/problem/D
-a+b=a^b+2*(a&b)
+a+b=(a xor b)+2*(a and b)
 //this can be proved from the elementary binary addition process...
 // we can observe that the difference between sum and xor of two numbers is always even...
- 
+  
+//https://codeforces.com/contest/1556/problem/D
+a+b=(a or b)+(a and b).
