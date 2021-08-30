@@ -28,10 +28,14 @@ x | ~(x - (1 << n)) = the lowest run of cleared bits (possibly length 0) in x, s
   
 -------------------------------------------------------------------------
 
+//These properties are useful in interactive problems
+
 //https://codeforces.com/contest/1325/problem/D
 a+b=(a xor b)+2*(a and b)
-//this can be proved from the elementary binary addition process...
 // we can observe that the difference between sum and xor of two numbers is always even...
   
 //https://codeforces.com/contest/1556/problem/D
-a+b=(a or b)+(a and b).
+a+b=(a or b)+(a and b)
+  
+//https://codeforces.com/blog/entry/94384?#comment-834316
+(a xor b) = (a and b) ^ (a or b)
