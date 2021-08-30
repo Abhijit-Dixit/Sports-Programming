@@ -47,6 +47,10 @@ void solve(){
 ------------------------------------------------------------------------------------------------------------------------------
 
 // algortihm to find articulation points
+// It might seem to you that the strategy of checking wether or not a root is AP by counting its children is hacky and can fail
+// in the event that the subtrees  are connected somewhere down below hence removing root would not create new CC.
+	
+// but here we are not merely counting the number of chlidren the root has instead we are no children the root has in the DFS tree.
 void dfs(int node,int par){
     visited[node]=true;
     in[node]=lo[node]=timer++;
@@ -60,7 +64,7 @@ void dfs(int node,int par){
             children++;
             dfs(child,node);
             lo[node]=min(lo[node],lo[child]);
-            if(lo[child]>=in[node] && par!=-1){
+            if(lo[child]>=in[node] && par!=-1){// unlike int the bridge algo here we have equality because here AP and all its edges get removed.(refer Bridges comments).
                     ap.insert(node);
             }
         }
