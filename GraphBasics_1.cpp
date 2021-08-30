@@ -124,7 +124,7 @@ void dfs(int node,int par){
         }
         else{
             dfs(child,node);
-            if(in[node]<low[child]){
+            if(in[node]<low[child]){// here articulation point algorithm allows equality because... removing node would remove all the adjacent edge but in case of bridge only node-child edge is removed.
                 cout<<"bridge from "<<node<<" to "<<child<<endl;
             }
             low[node]=min(low[node],low[child]);
