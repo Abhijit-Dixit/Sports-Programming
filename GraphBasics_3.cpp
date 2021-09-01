@@ -99,6 +99,8 @@ void euler_dfs(int v){
 // The algorithm can process all kinds of graphs, provided that the graph does not contain a cycle with negative length.
 // If the graph contains a negative cycle, the algorithm can detect this.
 // just run BF one more time if there is a change in any distance then -ve cycle exists.
+
+
 struct Edge {
     int a, b, w;
 };
@@ -123,6 +125,16 @@ void BF(int n,int m){
 
 
 //FLOYD WARSHALL
+
+
+//Why the order of loop is important in FW?
+// becuase with k in the outermost loop the arguement that we make is we have checked all nodes {1,2,..,k-1} to be the intermediate node
+// and we have updated the results for all {i,j} with this intermediate nodes.
+
+// but with k in the innermost loop the arguement that we make is is that for every pair {i,j} i am checking if 1 to k can be an intermediate node,
+// the issue with this is maybe some node in {1,2,...,k} is not currently intermediate node between i,j but after considering someother pairs {i,j} in future 
+// it can act as a valid intermediate node that reduced distance between i,j.
+
 // used to find shortest distance between any two vertices.
 // This algorithm can also be used to detect the presence of negative cycles.
 // The graph has a negative cycle if at the end of the algorithm, the distance from a vertex v to itself is negative.
