@@ -119,3 +119,124 @@ class Solution:
         print(postfix)
 
         return postorder_eval(postfix)
+    
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// https://www.lintcode.com/problem/849/description
+
+class Solution {
+public:
+    /**
+     * @param s: the expression string
+     * @return: the answer
+     */
+    int getPrecedence(string op){
+        if(op=="*" || op=="/")return 1;
+        else if(op=="+" || op=="-")return 0;
+        else return -1;
+    }
+    bool isOperator(char op){
+        if(op=='+' || op=='-' || op=='/' || op=='*')return true;
+        else return false;
+    } 
+    bool isOperator(string op){
+        if(op=="+" || op=="-" || op=="/" || op=="*" )return true;
+        else return false;
+    }
+    vector<string> getExpression(string& s){
+        vector<string> exp;
+        string num="";
+        int n = s.length();
+
+        for(int i=0;i<n;i++){
+            if(s[i]==' ')continue;
+            else if(isdigit(s[i])){
+                num+=s[i];
+            }
+            else{
+                if(num!=""){
+                    exp.push_back(num);
+                    num="";
+                }
+                string temp="";
+                temp+=s[i];
+                exp.push_back(temp);
+            }
+        }
+        if(num!=""){
+            exp.push_back(num);
+            num="";
+        }
+        return exp;
+    }
+    
+    vector<string> getPostfix(vector<string>& exp){
+        vector<string> postfix;
+        stack<string> ops;
+        int n = exp.size();
+        for(int i=0;i<exp.size();i++){
+            if(exp[i]=="("){
+                ops.push(exp[i]);
+            }
+            else if(exp[i]==")"){
+                //if(!ops.empty() && ops.top()=="(")return {};
+                while(!ops.empty() && ops.top()!="("){
+                    postfix.push_back(ops.top());
+                    ops.pop();
+                }
+                if(ops.empty())return {};
+                ops.pop();
+            }
+            else if(isOperator(exp[i])){
+                while(!ops.empty() && getPrecedence(ops.top())>=getPrecedence(exp[i])){
+                    postfix.push_back(ops.top());
+                    ops.pop();
+                }
+                ops.push(exp[i]);
+            }
+            else{
+                postfix.push_back(exp[i]);
+            }
+        }
+        while(!ops.empty()){
+            postfix.push_back(ops.top());
+            ops.pop();
+        }
+        return postfix;
+    }
+
+    long long evaluatePostfix(vector<string>& postfixExp){
+        int ans = 0;
+        stack<long long> nums;
+        for(auto u:postfixExp){
+            if(u=="(" || u==")")return -1;
+            else if(isOperator(u)){
+                if(nums.size()<2)return -1;
+                long long num1= nums.top();
+                nums.pop();
+                long long num2 = nums.top();
+                nums.pop();
+                if(u=="+")nums.push(num1+num2);
+                else if(u=="*")nums.push(num1*num2);
+                else if(u=="/")nums.push(num2/num1);
+                else if(u=="-")nums.push(num2-num1);
+            }
+            else{
+                nums.push(stoll(u));
+            }
+        }
+
+        if(nums.size()!=1)return -1;
+        return nums.top();
+    }
+    int calculate(string &s) {
+        vector<string> exp = getExpression(s);
+        for(auto u:exp)cout<<u<<" ";
+        cout<<endl;
+        vector<string> postfixExp = getPostfix(exp);
+        for(auto u:postfixExp)cout<<u<<" ";
+        cout<<endl;
+        if(postfixExp.size()==0)return -1;
+        return evaluatePostfix(postfixExp);
+    }
+};
