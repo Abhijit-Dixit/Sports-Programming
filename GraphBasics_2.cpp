@@ -8,8 +8,15 @@
 // detect cycle in directed graph
 
 // single sources shortest path for weghted directed/undirected graphs
-//O(VlogV + E)
-//if priority_queue isn't cusomizable use a set instead.
+//O(V + ELogV)
+// V for processing each node
+// E because we try each edge that could potentially lead us to access Heap thus log (V+E) ~ log(V^2) ~ log(V)
+// if priority_queue isn't cusomizable use a set instead.
+
+// When using any Fancy BFS, MultiSource BFS, 3D BFS, Djkstra always stick with dist array instead of visited.
+// its not like visited cannot be used but then you'll have to mark item not when the are pushed to the heap, but, instead when they are being popped out.
+// This method is generally more slower.
+
 vector<pair<int,int>> v[100005];
 priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
 vector<int> dis(100005,mod);
